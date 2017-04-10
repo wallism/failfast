@@ -1,5 +1,6 @@
-ip=52.237.212.113
+ip=52.237.210.159
 logfile=consul-setup.$ip.log
+keydir=~/failfast/keys
 
-plink -i ./keys/ff.ppk wallism@$ip -m 10-consul-init-server.sh > $logfile
-plink -i ./keys/ff.ppk wallism@$ip -m 20-consul-install.sh >> $logfile
+ssh -i $keydir/ff.pem wallism@$ip "bash -s" < ./10-consul-init-server.sh | tee $logfile
+ssh -i $keydir/ff.pem wallism@$ip "bash -s" < ./20-consul-install.sh | tee -a $logfile

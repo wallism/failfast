@@ -1,0 +1,1 @@
+Get-Content consul-setup.52.237.212.113.log -Wait
