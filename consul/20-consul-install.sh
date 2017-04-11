@@ -27,6 +27,8 @@ sudo adduser consul
 
 echo "create common config structure"
 sudo mkdir -p /etc/consul.d/{bootstrap,server,client}
+echo "chown so can copy configs via rsync"
+sudo chown consul:consul /etc/consul.d/{bootstrap,server,client}
 
 echo "create data dir"
 sudo mkdir /var/consul
