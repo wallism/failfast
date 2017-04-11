@@ -1,0 +1,10 @@
+{
+    "server": false,
+	"datacenter": "sydney",
+	"ui_dir": "/home/consul/dist"
+	"data_dir": "/var/consul",
+	"encrypt": "HOA7uK4sJEn0cBU2CCXapA==",
+	"log_level": "INFO",
+	"enable_syslog": true,
+	"start_join": ["10.0.0.4"]
+}
