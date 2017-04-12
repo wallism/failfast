@@ -1,0 +1,280 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "extensions_enablevmaccess_username": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "extensions_enablevmaccess_password": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "extensions_enablevmaccess_ssh_key": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "extensions_enablevmaccess_reset_ssh": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "extensions_enablevmaccess_remove_user": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "extensions_enablevmaccess_expiration": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "virtualMachines_ubuntu_one_name": {
+            "defaultValue": "ubuntu-one",
+            "type": "String"
+        },
+        "networkInterfaces_ubuntu_one490_name": {
+            "defaultValue": "ubuntu-one490",
+            "type": "String"
+        },
+        "networkSecurityGroups_ubuntu_one_nsg_name": {
+            "defaultValue": "ubuntu-one-nsg",
+            "type": "String"
+        },
+        "publicIPAddresses_ubuntu_one_ip_name": {
+            "defaultValue": "ubuntu-one-ip",
+            "type": "String"
+        },
+        "virtualNetworks_consul_rg_one_vnet_name": {
+            "defaultValue": "consul-rg-one-vnet",
+            "type": "String"
+        },
+        "storageAccounts_consulrgonediag362_name": {
+            "defaultValue": "consulrgonediag362",
+            "type": "String"
+        },
+        "storageAccounts_consulrgonedisks_name": {
+            "defaultValue": "consulrgonedisks",
+            "type": "String"
+        },
+        "extensions_enablevmaccess_name": {
+            "defaultValue": "ubuntu-one/enablevmaccess",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/53ccb882-db18-41e1-8b79-5babec22be1b/resourceGroups/consul-rg-one/providers/Microsoft.Compute/virtualMachines/ubuntu-one'.",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('virtualMachines_ubuntu_one_name')]",
+            "apiVersion": "2016-04-30-preview",
+            "location": "australiaeast",
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_A0"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "16.04-LTS",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "osType": "Linux",
+                        "name": "[parameters('virtualMachines_ubuntu_one_name')]",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('https', '://', parameters('storageAccounts_consulrgonedisks_name'), '.blob.core.windows.net', concat('/vhds/', parameters('virtualMachines_ubuntu_one_name'),'20170407160021.vhd'))]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_ubuntu_one_name')]",
+                    "adminUsername": "wallism",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "/home/wallism/.ssh/authorized_keys",
+                                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAkYIE05BEdn8Qm3k6FmroI5F1IHBvjJG4LWHgY2i/5dloRUG5ei9L8IODfcTMegZpYYeI0eNbIuchNCEGp0pJtlF2EnpXREInwv+Sk1JT+3MyRfFuA5tH7XCdeBbw1C/brYotdXGqW+6qsqBqmPKZyYnPiu4w2sJHfMb4IaEfbykIZo0RjPghJeoDGH97TCbkd58Kdscb4orxXC1gWyz6cz7keargDVlMvaa2itWSQmz7Al4piiwke/wowcevBtHONOSbE1HZHcHCjg0NxnijmFCNci8RM8XBzmZtZN0MomDxdy6+Gk/3qOjiV0z/qg/v6AeiUhsXFIG/BoJsTkn9jw=="
+                                }
+                            ]
+                        }
+                    },
+                    "secrets": []
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_ubuntu_one490_name'))]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[concat('https', '://', parameters('storageAccounts_consulrgonediag362_name'), '.blob.core.windows.net', '/')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_consulrgonedisks_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_ubuntu_one490_name'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_consulrgonediag362_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/53ccb882-db18-41e1-8b79-5babec22be1b/resourceGroups/consul-rg-one/providers/Microsoft.Network/networkInterfaces/ubuntu-one490'.",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[parameters('networkInterfaces_ubuntu_one490_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "australiaeast",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.0.0.4",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_ubuntu_one_ip_name'))]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_consul_rg_one_vnet_name')), '/subnets/consul-subnet-one')]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ubuntu_one_nsg_name'))]"
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_ubuntu_one_ip_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_consul_rg_one_vnet_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ubuntu_one_nsg_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/53ccb882-db18-41e1-8b79-5babec22be1b/resourceGroups/consul-rg-one/providers/Microsoft.Network/networkSecurityGroups/ubuntu-one-nsg'.",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[parameters('networkSecurityGroups_ubuntu_one_nsg_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "australiaeast",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "default-allow-ssh",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1000,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/53ccb882-db18-41e1-8b79-5babec22be1b/resourceGroups/consul-rg-one/providers/Microsoft.Network/publicIPAddresses/ubuntu-one-ip'.",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIPAddresses_ubuntu_one_ip_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "australiaeast",
+            "properties": {
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/53ccb882-db18-41e1-8b79-5babec22be1b/resourceGroups/consul-rg-one/providers/Microsoft.Network/virtualNetworks/consul-rg-one-vnet'.",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworks_consul_rg_one_vnet_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "australiaeast",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "consul-subnet-one",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/24"
+                        }
+                    }
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/53ccb882-db18-41e1-8b79-5babec22be1b/resourceGroups/consul-rg-one/providers/Microsoft.Storage/storageAccounts/consulrgonediag362'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storageAccounts_consulrgonediag362_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "australiaeast",
+            "tags": {},
+            "properties": {},
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/53ccb882-db18-41e1-8b79-5babec22be1b/resourceGroups/consul-rg-one/providers/Microsoft.Storage/storageAccounts/consulrgonedisks'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storageAccounts_consulrgonedisks_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "australiaeast",
+            "tags": {},
+            "properties": {},
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/53ccb882-db18-41e1-8b79-5babec22be1b/resourceGroups/consul-rg-one/providers/Microsoft.Compute/virtualMachines/ubuntu-one/extensions/enablevmaccess'.",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[parameters('extensions_enablevmaccess_name')]",
+            "apiVersion": "2016-04-30-preview",
+            "location": "australiaeast",
+            "properties": {
+                "publisher": "Microsoft.OSTCExtensions",
+                "type": "VMAccessForLinux",
+                "typeHandlerVersion": "1.4",
+                "autoUpgradeMinorVersion": true,
+                "settings": {},
+                "protectedSettings": {
+                    "username": "[parameters('extensions_enablevmaccess_username')]",
+                    "password": "[parameters('extensions_enablevmaccess_password')]",
+                    "ssh_key": "[parameters('extensions_enablevmaccess_ssh_key')]",
+                    "reset_ssh": "[parameters('extensions_enablevmaccess_reset_ssh')]",
+                    "remove_user": "[parameters('extensions_enablevmaccess_remove_user')]",
+                    "expiration": "[parameters('extensions_enablevmaccess_expiration')]"
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachines_ubuntu_one_name'))]"
+            ]
+        }
+    ]
+}

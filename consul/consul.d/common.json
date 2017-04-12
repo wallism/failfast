@@ -1,11 +1,7 @@
 {
-    "bootstrap": false,
-    "server": true,
-	"datacenter": "sydney",
+	"client_addr": "0.0.0.0",
 	"data_dir": "/var/consul",
+	"log_level": "INFO",
 	"_comment": "The encrypt parameter must be the same for all of the participants in the system",
 	"encrypt": "HOA7uK4sJEn0cBU2CCXapA==",
-	"log_level": "INFO",
-	"enable_syslog": true,
-	"start_join": ["10.0.0.4"]
 }
