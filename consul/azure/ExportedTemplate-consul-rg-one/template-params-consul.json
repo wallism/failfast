@@ -1,0 +1,39 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "extensions_enablevmaccess_username": {
+            "value": "admin"
+        },        
+        "extensions_enablevmaccess_name": {
+            "value": "enablevmaccess-ext-name"
+        },
+        "extensions_enablevmaccess_password": {
+            "value": "admin"
+        },
+        "extensions_enablevmaccess_ssh_key": {
+            "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCh40CQuj9IgxlW9lhoOhASNHmh9CvtfKGE6H9sK0sSYqyXdfbHANLZ+5Dagzm8k4VgvwIP8+LXAoJyyOEY1s83Cvh84J3DMRulyUf/KTgp3g+2j36yN/8DzgT2yMhAvfL5x4vnKgK9l9D7DA09TpcJVdO92zuD+Cc9+oVqOA0ImySjOtjxb2k2kdtaidlpL1KN+B8+03em+zgDCSg1UN1KBaHEnWd98f05/gPoBH+3mExW08N+MPkDQ4SNXtXHZGgurhhoLXwE5pslzHVn4pMXRMn5xR4rVam0wI9YK0yuwcBsoHsU8I9gT5GQEMeBJySBczxaU776a8JjD8WTYCv5 mark@Marks-MacBook-Air.local"
+        },
+        "extensions_enablevmaccess_reset_ssh": {
+            "value": "false"
+        },
+        "vm-name": {
+            "value": "consul-server"
+        },
+        "nsg-server-name": {
+            "value": "consul-server-nsg"
+        },
+        "vnet-name": {
+            "value": "consul-rg-one-vnet"
+        },
+        "storage_Diagnostics_Name": {
+            "value": "consulrgonediagostics"
+        },
+        "storage_Disks_Name": {
+            "value": "consulrgonedisks"
+        },
+        "extensions_enablevmaccess_name": {
+            "value": "enablevmaccess"
+        }
+    }
+}
