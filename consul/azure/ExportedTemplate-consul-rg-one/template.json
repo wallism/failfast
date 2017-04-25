@@ -22,20 +22,16 @@
             "defaultValue": null,
             "type": "securestring"
         },
-        "extensions_enablevmaccess_remove_user": {
+        "extensions_enablevmaccess_name": {
             "defaultValue": null,
-            "type": "securestring"
-        },
-        "extensions_enablevmaccess_expiration": {
-            "defaultValue": null,
-            "type": "securestring"
+            "type": "string"
         },
         "vm-name": {
-            "defaultValue": "consul-server",
+            "defaultValue": null,
             "type": "string"
         },
         "nsg-server-name": {
-            "defaultValue": "consul-server-nsg",
+            "defaultValue": null,
             "type": "string"
         },
         "vnet-name": {
@@ -47,15 +43,11 @@
             "type": "string"
         },
         "storage_Diagnostics_Name": {
-            "defaultValue": "consulrgonediagostics",
+            "defaultValue": null,
             "type": "string"
         },
         "storage_Disks_Name": {
-            "defaultValue": "consulrgonedisks",
-            "type": "string"
-        },
-        "extensions_enablevmaccess_name": {
-            "defaultValue": "consul-server-enablevmaccess",
+            "defaultValue": null,
             "type": "string"
         }
     },
@@ -197,7 +189,7 @@
         {
             "comments": "Generalized from resource: '/subscriptions/53ccb882-db18-41e1-8b79-5babec22be1b/resourceGroups/consul-rg-one/providers/Microsoft.Network/publicIPAddresses/[parameters('[concat(parameters('vm-name'),'-',copyIndex(),'-ip')]')]'.",
             "type": "Microsoft.Network/publicIPAddresses",
-            "name": "'[concat(parameters('vm-name'),'-',copyIndex(),'-ip')]'",
+            "name": "[concat(parameters('vm-name'),'-',copyIndex(),'-ip')]",
             "apiVersion": "2016-03-30",
             "location": "[parameters('location-name')]",
             "copy": {
@@ -272,7 +264,7 @@
         {
             "comments": "Generalized from resource: '/subscriptions/53ccb882-db18-41e1-8b79-5babec22be1b/resourceGroups/consul-rg-one/providers/Microsoft.Compute/virtualMachines/consul-server/extensions/enablevmaccess'.",
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('extensions_enablevmaccess_name'), '-', copyIndex())]",
+            "name": "[concat(parameters('vm-name'), '-', copyIndex(), '/', parameters('extensions_enablevmaccess_name'))]",
             "apiVersion": "2016-04-30-preview",
             "location": "[parameters('location-name')]",
             "copy": {
@@ -289,9 +281,7 @@
                     "username": "[parameters('extensions_enablevmaccess_username')]",
                     "password": "[parameters('extensions_enablevmaccess_password')]",
                     "ssh_key": "[parameters('extensions_enablevmaccess_ssh_key')]",
-                    "reset_ssh": "[parameters('extensions_enablevmaccess_reset_ssh')]",
-                    "remove_user": "[parameters('extensions_enablevmaccess_remove_user')]",
-                    "expiration": "[parameters('extensions_enablevmaccess_expiration')]"
+                    "reset_ssh": "[parameters('extensions_enablevmaccess_reset_ssh')]"
                 }
             },
             "dependsOn": [
